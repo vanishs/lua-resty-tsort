@@ -1,3 +1,7 @@
+return require("umd").define({
+    "exports",
+}, function(tsort)
+
 local setmetatable = setmetatable
 local pairs = pairs
 local type = type
@@ -12,7 +16,7 @@ local function visit(k, n, m, s)
     m[k] = 1
     s[#s+1] = k
 end
-local tsort = {}
+
 tsort.__index = tsort
 function tsort.new()
     return setmetatable({ n = {} }, tsort)
@@ -55,4 +59,4 @@ function tsort:sort()
     end
     return s
 end
-return tsort
+end)
