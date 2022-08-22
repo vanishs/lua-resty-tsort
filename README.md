@@ -5,65 +5,72 @@ Performs a topological sort on input data.
 ## Synopsis
 
 ```lua
-local dump  = require "pl.pretty".dump
-local tsort = require "resty.tsort"
+return require("umd").define({
+    "exports",
+    "github.com/vanishs/lua-resty-tsort-release001/lib/resty/tsort"
+}, function(exports, tsort)
 
-local graph = tsort.new()
+  function exports.init()
+    local graph = tsort.new()
 
-graph:add('a', 'b')
-graph:add('b', 'c')
-graph:add('0', 'a')
+    graph:add('a', 'b')
+    graph:add('b', 'c')
+    graph:add('0', 'a')
 
-dump(graph:sort())
+    graph:sort()
 
--- Output:
--- {
---   "0",
---   "a",
---   "b",
---   "c"
--- }
+    -- Output:
+    -- {
+    --   "0",
+    --   "a",
+    --   "b",
+    --   "c"
+    -- }
 
-graph:add('1', '2', '3', 'a');
+    graph:add('1', '2', '3', 'a');
 
-dump(graph:sort())
+    graph:sort()
 
--- Output:
--- {
---   "0",
---   "1",
---   "2",
---   "3",
---   "a",
---   "b",
---   "c"
--- }
+    -- Output:
+    -- {
+    --   "0",
+    --   "1",
+    --   "2",
+    --   "3",
+    --   "a",
+    --   "b",
+    --   "c"
+    -- }
 
-graph:add{'1', '1.5'};
-graph:add{'1.5', 'a'};
+    graph:add{'1', '1.5'};
+    graph:add{'1.5', 'a'};
 
-dump(graph:sort())
+    graph:sort()
 
--- Output:
--- {
---   "0",
---   "1",
---   "2",
---   "3",
---   "1.5",
---   "a",
---   "b",
---   "c"
--- }
+    -- Output:
+    -- {
+    --   "0",
+    --   "1",
+    --   "2",
+    --   "3",
+    --   "1.5",
+    --   "a",
+    --   "b",
+    --   "c"
+    -- }
 
-graph:add('first', 'second');
-graph:add('second', 'third', 'first');
+    graph:add('first', 'second');
+    graph:add('second', 'third', 'first');
 
-local sorted, err = graph:sort()
+    local sorted, err = graph:sort()
 
--- Returns:
--- sorted = nil
--- err = "There is a circular dependency in the graph. It is not possible to derive a topological sort."
+    -- Returns:
+    -- sorted = nil
+    -- err = "There is a circular dependency in the graph. It is not possible to derive a topological sort."
+
+  end
+end)
+
 ```
 
 ## Alternatives
